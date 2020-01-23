@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "demo.crud.mapper.UserMapper">	
+
+   <resultMap id = "result" type = "User">
+      <result property = "id" column = "id"/>
+      <result property = "name" column = "name"/>
+      <result property = "email" column = "email"/>
+      <result property = "gender" column = "gender"/>
+      <result property = "address" column = "address"/>	    
+   </resultMap>
+	
+   <select id = "getAllUsers" resultMap = "result">
+      SELECT * FROM user; 
+   </select>
+    
+   <select id = "getUserById" parameterType = "int" resultMap = "result">
+      SELECT * FROM USER WHERE ID = #{id};
+   </select>
+
+   <update id = "updateUser" parameterType = "User">
+      UPDATE user SET name = #{name}, 
+         email = #{email}, 
+         gender = #{gender}, 
+         address = #{address} 
+      WHERE id = #{id};
+   </update>
+   
+   <!-- Adding a new user -->
+	<insert id='insertUser' parameterType='User' useGeneratedKeys='true' keyProperty='id'>
+		INSERT INTO USER(name, email, gender, address)
+		VALUES(#{name}, #{email}, #{gender}, #{address})
+	</insert>
+   
+   <!-- Deletion -->
+   <delete id = "deleteUser" parameterType = "int">
+      DELETE from user WHERE id = #{id};
+   </delete>
+</mapper>
